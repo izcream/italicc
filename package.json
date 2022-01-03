@@ -1,10 +1,9 @@
 {
   "name": "italicc",
   "displayName": "italicc",
-  "description": "Toggle italic on/off",
-  "version": "0.0.2",
+  "description": "Add ability to toggle italic on/off in vscode",
+  "version": "0.0.3",
 	"publisher": "izcream",
-  
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/izcream/italicc"
@@ -27,11 +26,11 @@
     "configuration": {
       "title": "Italicc",
       "properties": {
-        "italicc.enabled": {
-          "title": "Turn-off italic",
+        "italicc.disabled": {
+          "title": "Disable Italic",
           "type": "boolean",
           "default": false,
-          "description": "Turn italic on/off"
+          "description": "Disable Italic"
         }
       }
     }

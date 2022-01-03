@@ -2,14 +2,14 @@ import * as vscode from 'vscode';
 import { textMateRules } from './textmate-scopes';
 
 export async function activate(context: vscode.ExtensionContext) {
-	if (vscode.workspace.getConfiguration().get('italicc.enabled')) {
-		toggleItalic(context, vscode.workspace.getConfiguration().get('italicc.enabled'));
+	if (vscode.workspace.getConfiguration().get('italicc.disabled')) {
+		toggleItalic(context, vscode.workspace.getConfiguration().get('italicc.disabled'));
 	}
 	vscode.workspace.onDidChangeConfiguration(e => {
-		if (!e.affectsConfiguration('italicc.enabled')) {
+		if (!e.affectsConfiguration('italicc.disabled')) {
 			return false;
 		}
-		toggleItalic(context, vscode.workspace.getConfiguration().get('italicc.enabled'));
+		toggleItalic(context, vscode.workspace.getConfiguration().get('italicc.disabled'));
 	});
 }
 

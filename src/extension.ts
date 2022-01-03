@@ -30,7 +30,6 @@ async function toggleItalic(context: vscode.ExtensionContext, enabled: boolean|u
 		const configBuffer = Buffer.from(JSON.stringify(oldConfig, null, 2), 'utf8');
 		await vscode.workspace.fs.writeFile(savePath, configBuffer);
 		vscode.workspace.getConfiguration().update('editor.tokenColorCustomizations', config, vscode.ConfigurationTarget.Global);
-		vscode.window.setStatusBarMessage('[italicc] All italic will disappear ✅');
 	} else {
 		const path = context.globalStorageUri.fsPath + '/backup.json';
 		let readStr = undefined;
@@ -46,6 +45,5 @@ async function toggleItalic(context: vscode.ExtensionContext, enabled: boolean|u
 		} else {
 			vscode.workspace.getConfiguration().update('editor.tokenColorCustomizations', {}, true);
 		}
-		vscode.window.setStatusBarMessage('[italicc] All italic will appear again ⛔');
 	}
 }

@@ -2,17 +2,23 @@
   "name": "italicc",
   "displayName": "italicc",
   "description": "Add ability to toggle italic on/off in vscode",
-  "version": "0.0.3",
-	"publisher": "izcream",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/izcream/italicc"
-	},
+  "version": "0.1.2",
+  "publisher": "izcream",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/izcream/italicc"
+  },
   "engines": {
     "vscode": "^1.63.0"
   },
   "icon": "italicc.png",
-  "keywords": ["italic", "toggle italic"],
+  "keywords": [
+    "italic",
+    "toggle italic",
+    "themes",
+    "ui",
+    "text"
+  ],
   "categories": [
     "Formatters",
     "Themes",
@@ -26,14 +32,21 @@
     "configuration": {
       "title": "Italicc",
       "properties": {
-        "italicc.disabled": {
-          "title": "Disable Italic",
+        "italicc.plugin.enabled": {
+          "title": "Enable extensions",
           "type": "boolean",
-          "default": false,
-          "description": "Disable Italic"
+          "default": true,
+          "description": "Turn off italic text on editor"
         }
       }
-    }
+    },
+    "commands": [
+      {
+        "command": "italicc.command.enabled",
+        "title": "Toggle on/off italicc extension",
+        "category": "italicc"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "yarn run package",
@@ -44,22 +57,30 @@
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "test:wsl": "xvfb-run --auto-servernum yarn test"
   },
   "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "17.x",
     "@types/vscode": "^1.63.0",
-    "@types/glob": "^7.1.4",
-    "@types/mocha": "^9.0.0",
-    "@types/node": "14.x",
-    "@typescript-eslint/eslint-plugin": "^5.1.0",
-    "@typescript-eslint/parser": "^5.1.0",
-    "eslint": "^8.1.0",
-    "glob": "^7.1.7",
-    "mocha": "^9.1.3",
-    "typescript": "^4.4.4",
-    "ts-loader": "^9.2.5",
-    "webpack": "^5.52.1",
-    "webpack-cli": "^4.8.0",
-    "@vscode/test-electron": "^1.6.2"
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "@vscode/test-electron": "^2.1.2",
+    "eslint": "^8.9.0",
+    "glob": "^7.2.0",
+    "mocha": "^9.2.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.5",
+    "webpack": "^5.69.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "prettier": {
+    "semi": true,
+    "tabWidth": 2,
+    "printWidth": 150,
+    "trailingComma": "none",
+    "singleQuote": true
   }
 }

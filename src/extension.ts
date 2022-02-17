@@ -1,49 +1,14 @@
 import * as vscode from 'vscode';
-import { textMateRules } from './textmate-scopes';
+import { setupCommand } from './services/commands';
+import { toggleEnablePlugin } from './services/helper';
 
 export async function activate(context: vscode.ExtensionContext) {
-	if (vscode.workspace.getConfiguration().get('italicc.disabled')) {
-		toggleItalic(context, vscode.workspace.getConfiguration().get('italicc.disabled'));
-	}
-	vscode.workspace.onDidChangeConfiguration(e => {
-		if (!e.affectsConfiguration('italicc.disabled')) {
-			return false;
-		}
-		toggleItalic(context, vscode.workspace.getConfiguration().get('italicc.disabled'));
-	});
+  setupCommand(context);
+  vscode.workspace.onDidChangeConfiguration((e) => {
+    if (e.affectsConfiguration('italicc.plugin.enabled')) {
+      toggleEnablePlugin(context, vscode.workspace.getConfiguration().get('italicc.plugin.enabled'));
+    }
+  });
 }
 
 export function deactivate() {}
-
-async function toggleItalic(context: vscode.ExtensionContext, enabled: boolean|undefined): Promise<void> {
-	if (enabled) {
-		const oldConfig = vscode.workspace.getConfiguration().get('editor.tokenColorCustomizations') as any;
-		let config = {...oldConfig, ...textMateRules};
-		if (oldConfig['textMateRules'] !== undefined) {
-			let mergedConfig = oldConfig['textMateRules'] as Array<any>;
-			mergedConfig.push(textMateRules.textMateRules[0]);
-			config = { ...oldConfig, 
-				textMateRules: mergedConfig
-			};
-		}
-		const savePath = vscode.Uri.file(context.globalStorageUri.fsPath + '/backup.json');
-		const configBuffer = Buffer.from(JSON.stringify(oldConfig, null, 2), 'utf8');
-		await vscode.workspace.fs.writeFile(savePath, configBuffer);
-		vscode.workspace.getConfiguration().update('editor.tokenColorCustomizations', config, vscode.ConfigurationTarget.Global);
-	} else {
-		const path = context.globalStorageUri.fsPath + '/backup.json';
-		let readStr = undefined;
-		try {
-			const configBuffer = await vscode.workspace.fs.readFile(vscode.Uri.file(path));
-			readStr = Buffer.from(configBuffer).toString('utf8');
-		} catch(e) {
-			console.log(e);
-		}
-		if (readStr) {
-			vscode.workspace.getConfiguration().update('editor.tokenColorCustomizations', JSON.parse(readStr), true);
-			await vscode.workspace.fs.delete(vscode.Uri.file(path));
-		} else {
-			vscode.workspace.getConfiguration().update('editor.tokenColorCustomizations', {}, true);
-		}
-	}
-}

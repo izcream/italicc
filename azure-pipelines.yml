@@ -5,19 +5,6 @@ trigger:
   tags:
     include:
     - v*
-
-strategy:
-  matrix:
-    linux:
-      imageName: 'ubuntu-latest'
-    mac:
-      imageName: 'macos-latest'
-    windows:
-      imageName: 'windows-latest'
-
-pool:
-  vmImage: $(imageName)
-
 steps:
 
 - task: NodeTool@0

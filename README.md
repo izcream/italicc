@@ -1,6 +1,6 @@
 # Italicc
 ---
-Toggle italic on/off in your code😊
+Easy Toggle text italic on/off in your code 😊
 
 ### How to use
 - Open vscode settings

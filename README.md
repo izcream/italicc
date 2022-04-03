@@ -1,5 +1,5 @@
 # Italicc
----
+
 Easy Toggle text italic on/off in your code 😊
 
 ### How to use
